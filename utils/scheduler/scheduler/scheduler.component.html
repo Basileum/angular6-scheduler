@@ -1,0 +1,34 @@
+<div class="labels">
+  <div class="scheduler-row"></div>
+  <div class="scheduler-row" *ngFor="let label of labels">{{label}}</div>
+</div>
+
+<div class="data-area">
+
+  <div class="scheduler-row timestamps">
+    <app-scheduler-grid
+      [min]="0"
+      [max]="1440"
+      [tick]="120"
+      [noLabels]="false"
+      class="grid-container"></app-scheduler-grid>
+  </div>
+
+  <div class="scheduler-row" *ngFor="let label of labels; let i = index;">
+    <app-scheduler-grid [min]="0"
+                        [max]="1440"
+                        [tick]="120"
+                        [noLabels]="true"
+                        class="grid-container striped no-labels">
+
+    </app-scheduler-grid>
+    <app-scheduler-multislider
+      [defaultvalue]="180"
+      [min]="0"
+      [max]="1440"
+      [tick]="15"
+      [slots]="slots"
+      [day]="i"></app-scheduler-multislider>
+  </div>
+
+</div>

@@ -1,0 +1,19 @@
+
+<div title="{{model.start | intToTime }} - {{model.stop | intToTime }}"
+     [style.left]="offset" [style.width]="width"
+     [ngClass]="{'active': booleanForActiveClass}">
+  <app-scheduler-handle class="handle left"
+                        [ondrag]="resize"
+                        [ondragstart]="startResizeStart"
+                        [ondragstop]="stopDrag"></app-scheduler-handle>
+  <app-scheduler-handle class="content"
+                        [ondrag]="drag"
+                        [ondragstart]="startDrag"
+                        [ondragstop]="stopDrag" >
+    {{model.start | intToTime }} - {{model.stop | intToTime }}
+  </app-scheduler-handle>
+  <app-scheduler-handle class="handle right"
+                        [ondrag]="resize"
+                        [ondragstart]="startResizeStop"
+                        [ondragstop]="stopDrag"></app-scheduler-handle>
+</div>

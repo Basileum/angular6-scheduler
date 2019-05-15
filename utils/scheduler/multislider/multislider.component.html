@@ -1,0 +1,15 @@
+<div [style.width]="hoverElementWidth+'px'"
+     [style.left]="leftForHoverElement"
+     (click)="onClickOnAddButton($event)"
+     class="slot ghost">
+  Add New
+</div>
+
+<app-scheduler-slot class="slot"
+                    *ngFor="let slot of slots | slotByDay:day"
+                    [tick]="tick"
+                    [min]="min"
+                    [max]="max"
+                    [slots]="slots"
+                    [model]="slot">
+</app-scheduler-slot>

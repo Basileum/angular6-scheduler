@@ -1,0 +1,9 @@
+<div class="grid-item" *ngFor="let item of range(tickcount); let i = index;"
+     [style.left]="(i*ticksize)+'%'"
+     [style.width]="ticksize+'%'"
+     [ngClass]="{'no-labels':noLabels}"
+>
+  <span class="content">
+    {{i * tick | intToTime}}
+  </span>
+</div>

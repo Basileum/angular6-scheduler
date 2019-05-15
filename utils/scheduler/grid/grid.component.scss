@@ -1,0 +1,29 @@
+.grid-item {
+  float: left;
+  height: 34px;
+  text-align: center;
+  overflow: hidden;
+}
+
+* {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+ div {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  padding: 0 5px;
+ }
+
+.striped div:nth-child(even) {
+  background: #fafafa;
+}
+
+.no-labels .content {
+  display: none;
+}
