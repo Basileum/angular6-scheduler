@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostBinding, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-scheduler-slot',
@@ -11,19 +11,29 @@ export class SlotComponent implements OnInit {
   @Input() model;
   @Input() slots;
   @Input() tick;
-  offset;
-  width;
+  offsetCalculated;
+  widthCalculated;
   container;
   resizeDirectionIsStart;
   valuesOnDragStart;
   booleanForActiveClass;
+  listenerMouseMove;
+  listenerMouseUp;
+  x=0;
+  modeDrag;
+  modeResize;
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private renderer: Renderer2) { }
+
+  @HostBinding('style.left') left;
+  @HostBinding('style.width') width;
 
   ngOnInit() {
     this.container = this.el.nativeElement.offsetParent;
     this.resizeDirectionIsStart = true;
     this.valuesOnDragStart = {start: this.model.start, stop: this.model.stop};
+    this.setPosition();
+
   }
 
 
@@ -46,8 +56,10 @@ export class SlotComponent implements OnInit {
   }
 
   setPosition() {
-    this.offset = this.valToPercent(this.model.start) + '%';
-    this.width = this.valToPercent(this.model.stop - this.model.start)  + '%';
+    this.offsetCalculated = this.valToPercent(this.model.start) + '%';
+    this.widthCalculated = this.valToPercent(this.model.stop - this.model.start)  + '%';
+    this.left = this.offsetCalculated;
+    this.width = this.widthCalculated;
   }
 
   stopDrag() {
@@ -65,11 +77,13 @@ export class SlotComponent implements OnInit {
 
 
   startResizeStart() {
+    this.modeResize=true;
     this.resizeDirectionIsStart = true;
     this.startDrag();
   }
 
   startResizeStop() {
+    this.modeResize=true;
     this.resizeDirectionIsStart = false;
     this.startDrag();
   }
@@ -92,6 +106,7 @@ export class SlotComponent implements OnInit {
       if (newStart <= this.model.stop && newStart >= this.min) {
         this.model.start = newStart;
         this.checkForFlip();
+        this.setPosition();
       }
 
     } else {
@@ -101,6 +116,7 @@ export class SlotComponent implements OnInit {
       if (newStop >= this.model.start && newStop <= this.max) {
         this.model.stop = newStop;
         this.checkForFlip();
+        this.setPosition();
       }
     }
   }
@@ -113,6 +129,7 @@ export class SlotComponent implements OnInit {
       this.model.start = newVal;
       this.model.stop = newVal + oldVal;
     }
+    this.setPosition();
   }
 
 
@@ -153,6 +170,51 @@ export class SlotComponent implements OnInit {
     // angular.element(container).removeClass('dragging');
     // angular.element(container).removeClass('slot-hover');
     // this.slots.splice(this.slots.indexOf(this.model), 1);
+  }
+
+  doOnMouseDownOnHandleLeft(event: MouseEvent) {
+    event.preventDefault();
+    this.x = event.pageX;
+    this.listenerMouseMove = this.renderer.listen('window', 'mousemove', (ev) => this.onMouseMove(ev));
+    this.listenerMouseUp = this.renderer.listen('window', 'mouseup', (ev) => this.onMouseUp(ev));
+    this.startResizeStart()
+  }
+
+  doOnMouseDownOnHandleContent(event: MouseEvent) {
+    event.preventDefault();
+    this.x = event.pageX;
+    this.listenerMouseMove = this.renderer.listen('window', 'mousemove', (ev) => this.onMouseMove(ev));
+    this.listenerMouseUp = this.renderer.listen('window', 'mouseup', (ev) => this.onMouseUp(ev));
+    this.startDrag();
+  }
+
+  doOnMouseDownOnHandleRight(event: MouseEvent) {
+    event.preventDefault();
+    this.x = event.pageX;
+    this.listenerMouseMove = this.renderer.listen('window', 'mousemove', (ev) => this.onMouseMove(ev));
+    this.listenerMouseUp = this.renderer.listen('window', 'mouseup', (ev) => this.onMouseUp(ev));
+    this.startResizeStop()
+  }
+
+  onMouseMove($event: MouseEvent) {
+    const delta = $event.pageX - this.x;
+    if(this.modeResize){
+      this.resize(delta);
+    } else{
+      this.drag(delta);
+    }
+
+  }
+
+  onMouseUp($event: MouseEvent) {
+    this.listenerMouseMove();
+    this.listenerMouseUp();
+    if(this.modeResize){
+      this.modeResize = false;
+    } else {
+      this.stopDrag();
+    }
+
   }
 
 }

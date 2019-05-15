@@ -1,0 +1,43 @@
+ .slot {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    border-radius: 3px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+   line-height: 25px;
+    color: #fff;
+  }
+
+  .ghost {
+    opacity: 0.6;
+    display: none;
+    cursor: pointer;
+  }
+
+  /*&:hover {
+    .ghost {
+      display: block;
+    }
+  }
+
+  &.slot-hover {
+    .ghost {
+      display: none;
+    }
+  }
+
+  &.dragging {
+    .ghost {
+      display: none;
+    }
+  }*/
+
+ app-scheduler-slot{
+  -webkit-transition: background 0.1s ease-in;
+   cursor: all-scroll;
+   min-width: 10px !important;
+   background: #4eb8d5;
+
+ }

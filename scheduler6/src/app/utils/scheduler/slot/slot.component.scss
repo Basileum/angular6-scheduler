@@ -1,0 +1,27 @@
+.handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+.handle.left, .handle.right {
+  width: 10px;
+  background: #000;
+  cursor: col-resize !important;
+  opacity: 0.1;
+}
+.handle:hover {
+  opacity: 0.3;
+}
+
+.handle.left {
+  left: 0;
+}
+.handle.right {
+  right: 0;
+}
+
+
+.active {
+  z-index: 10;
+  color: #fff;
+}

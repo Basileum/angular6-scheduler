@@ -1,0 +1,65 @@
+.labels, .data-area {
+  display: block;
+  float: left;
+}
+
+.labels {
+  //width: 15%;
+  color: #666;
+  border-right: 1px solid #ddd;
+
+  .scheduler-row {
+    padding: 0 5px;
+    border-bottom: 1px solid #ddd;
+  }
+
+}
+
+.data-area {
+  width: 85%;
+}
+
+.data-area .scheduler-row {
+  border-bottom: 1px solid #ddd;
+}
+
+.scheduler-row {
+  position: relative;
+  height: 35px;
+  line-height: 35px;
+
+  &:last-child, &:last-child .grid-container {
+    border-bottom: none;
+  }
+
+}
+
+.timestamps {
+  color: #aaa;
+  position: relative;
+
+  .grid-container div {
+    border-right: 1px solid #eee;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+
+.multi-slider{
+  position: relative;
+  display: block;
+  height: 35px;
+  overflow: hidden;
+}
+
+.grid-container{
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  border-bottom: 1px solid #ddd;
+
+}

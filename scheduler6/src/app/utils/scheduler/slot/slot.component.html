@@ -1,0 +1,9 @@
+
+<div title="{{model.start | intToTime }} - {{model.stop | intToTime }}"
+     [ngClass]="{'active': booleanForActiveClass}">
+  <div class="handle left" (mousedown)="doOnMouseDownOnHandleLeft($event)"></div>
+  <div class="content" (mousedown)="doOnMouseDownOnHandleContent($event)" >
+    {{model.start | intToTime }} - {{model.stop | intToTime }}
+  </div>
+  <div class="handle right" (mousedown)="doOnMouseDownOnHandleRight($event)"></div>
+</div>
